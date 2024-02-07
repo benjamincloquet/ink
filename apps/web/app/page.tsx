@@ -1,12 +1,13 @@
-import prisma from "@repo/database";
+import { getServerSession } from "@/lib/next-auth";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function IndexPage() {
-  const users = await prisma.user.findMany();
+  const serverSession = await getServerSession();
 
-  return (
-    <div>
-      <h1>Hello World</h1>
-      <pre>{JSON.stringify(users, null, 2)}</pre>
-    </div>
-  );
+  if (serverSession) {
+    redirect("/feed");
+  }
+
+  return <Link href="api/auth/signin">Sign in</Link>;
 }
