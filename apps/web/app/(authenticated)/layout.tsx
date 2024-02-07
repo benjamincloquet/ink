@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "@/lib/next-auth";
 import { redirect } from "next/navigation";
 
 export default async function Layout({
@@ -9,7 +9,7 @@ export default async function Layout({
   const session = await getServerSession();
 
   if (!session) {
-    redirect("/");
+    redirect("/api/auth/signin");
   }
 
   return <>{children}</>;
